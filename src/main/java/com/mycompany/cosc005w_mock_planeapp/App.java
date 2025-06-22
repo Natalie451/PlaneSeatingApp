@@ -6,9 +6,7 @@ package com.mycompany.cosc005w_mock_planeapp;
 import java.util.Scanner;
 
 /**
- * // Before you start, complete the following information: 
- * NAME: 
- * SURNAME:
+ * // Before you start, complete the following information: NAME: SURNAME:
  * STUDENT ID: SESSION (Day + time):
  */
 public class App {
@@ -86,8 +84,20 @@ public class App {
 
     private static void buyTicket() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Enter row number: ");
-        int row = input.nextInt() - 1;
+        int row;
+
+        while (true) {
+            System.out.print("Enter row number: ");
+            row = input.nextInt() - 1;
+            if (row < 0 || row > 3) {
+                System.out.println("Please enter a row number between 1 and 4");
+                continue;
+            } else {
+                break;
+            }
+
+        }
+
         System.out.print("Enter seat number: ");
         int seat = input.nextInt() - 1;
 
@@ -112,7 +122,7 @@ public class App {
         System.out.println("=".repeat(76));
 
         for (int row = 0; row < rows; row++) {
-            System.out.print("Row " + (row+1) + "(£" + pricePerRow[row]+ ")  ");
+            System.out.print("Row " + (row + 1) + "(£" + pricePerRow[row] + ")  ");
             int seatsPerRow = planeSeats[row].length;
             for (int seat = 0; seat < seatsPerRow; seat++) {
                 if (seat == 9) { // Create aisles
