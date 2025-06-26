@@ -4,6 +4,9 @@
 package com.mycompany.cosc005w_mock_planeapp;
 
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * // Before you start, complete the following information: NAME: SURNAME:
@@ -17,7 +20,6 @@ public class App {
     private static Payment[] payments = new Payment[100];  //A new array of objects type payment.
     private static int paymentCount = 0;
 
-    
     public static void main(String[] args) {
         System.out.println("Welcome to Flying Java!");
         initialiseRows();
@@ -55,6 +57,9 @@ public class App {
                     break;
                 case 3:
                     searchPayments();
+                    break;
+                case 4:
+                    saveToFile();
                     break;
                 default:
                     System.out.println("Option not available. Please select a valid option: ");
@@ -115,33 +120,31 @@ public class App {
         } else {
             System.out.println("This seat is already taken.");
         }
-        
+
         //Store payment
         int paymentAmount = pricePerRow[row];
         input.nextLine();
         System.out.print("Enter your email address: ");
         String email = input.nextLine();
-        
+
         Payment p1 = new Payment(email, paymentAmount);
-        
-        if(paymentCount < payments.length) {
+
+        if (paymentCount < payments.length) {
             payments[paymentCount] = p1;
-            paymentCount ++;
+            paymentCount++;
         } else {
             System.out.println("Payment Storage is full!");
         }
-        
+
         System.out.println("Purchase Successful. ");
-        p1.printPayment(); 
-        
+        p1.printPayment();
+
         System.out.println("Payments Array:");  //Testing to see if its printing the objects into the payments array
         for (int i = 0; i < paymentCount; i++) {  //Testing to see if its printing the objects into the payments array
             payments[i].printPayment();
         }
- 
 
     }
-  
 
     private static void showSeatingArea() {
 
@@ -173,25 +176,40 @@ public class App {
         System.out.println();
 
     }
-    
+
     public static void searchPayments() {
         Scanner input = new Scanner(System.in);
         System.out.println("Please enter an amount: ");
         int amount = input.nextInt();
         int index = 0;
-        
+
         boolean found = false;
         System.out.println("Payments matching amount £" + amount + ":");
-        
-        
-        for(int i = 0; i < paymentCount; i++) {
+
+        for (int i = 0; i < paymentCount; i++) {
             if (payments[i].getPaymentAmount() == amount) {
                 System.out.println(payments[i].getEmail());
                 found = true;
             }
-        } 
+        }
         if (!found) {
             System.out.println("No payments with that amount were found.");
+        }
+    }
+
+    public static void saveToFile() {
+
+        try {
+            FileWriter file = new FileWriter("payments.txt");
+
+            for (int i = 0; i < paymentCount; i++) {
+                file.write("Email: " + payments[i].getEmail() + "," + "Amount: " + payments[i].getPaymentAmount() + "\n");
+            }
+            file.close();
+            System.out.println("Saved to files");
+        } catch (IOException e) {
+            System.out.println("An error occured.");
+            e.printStackTrace();
         }
     }
 }
