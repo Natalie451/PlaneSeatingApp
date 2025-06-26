@@ -53,6 +53,9 @@ public class App {
                 case 2:
                     showSeatingArea();
                     break;
+                case 3:
+                    searchPayments();
+                    break;
                 default:
                     System.out.println("Option not available. Please select a valid option: ");
             }
@@ -169,5 +172,26 @@ public class App {
         System.out.println("=".repeat(76));
         System.out.println();
 
+    }
+    
+    public static void searchPayments() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter an amount: ");
+        int amount = input.nextInt();
+        int index = 0;
+        
+        boolean found = false;
+        System.out.println("Payments matching amount £" + amount + ":");
+        
+        
+        for(int i = 0; i < paymentCount; i++) {
+            if (payments[i].getPaymentAmount() == amount) {
+                System.out.println(payments[i].getEmail());
+                found = true;
+            }
+        } 
+        if (!found) {
+            System.out.println("No payments with that amount were found.");
+        }
     }
 }
