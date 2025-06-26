@@ -14,7 +14,10 @@ public class App {
     // Global variables
     private static int[][] planeSeats = null;
     private static int[] pricePerRow = null;
+    private static Payment[] payments = new Payment[100];  //A new array of objects type payment.
+    private static int paymentCount = 0;
 
+    
     public static void main(String[] args) {
         System.out.println("Welcome to Flying Java!");
         initialiseRows();
@@ -109,8 +112,33 @@ public class App {
         } else {
             System.out.println("This seat is already taken.");
         }
+        
+        //Store payment
+        int paymentAmount = pricePerRow[row];
+        input.nextLine();
+        System.out.print("Enter your email address: ");
+        String email = input.nextLine();
+        
+        Payment p1 = new Payment(email, paymentAmount);
+        
+        if(paymentCount < payments.length) {
+            payments[paymentCount] = p1;
+            paymentCount ++;
+        } else {
+            System.out.println("Payment Storage is full!");
+        }
+        
+        System.out.println("Purchase Successful. ");
+        p1.printPayment(); 
+        
+        System.out.println("Payments Array:");  //Testing to see if its printing the objects into the payments array
+        for (int i = 0; i < paymentCount; i++) {  //Testing to see if its printing the objects into the payments array
+            payments[i].printPayment();
+        }
+ 
 
     }
+  
 
     private static void showSeatingArea() {
 

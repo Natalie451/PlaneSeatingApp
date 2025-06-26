@@ -36,7 +36,7 @@ public class Payment {
     }
     
     public void printPayment() {
-        System.out.println("Email: " + getEmail() + "Payment Amount: " + getPaymentAmount());
+        System.out.println("Email: " + getEmail() + " " + "Payment Amount: " + "£" + getPaymentAmount());
         
     }
 }
